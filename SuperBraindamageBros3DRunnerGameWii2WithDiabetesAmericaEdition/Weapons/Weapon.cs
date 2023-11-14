@@ -2,7 +2,17 @@
 
 public class Weapon
 {
-    public int minDamage;
+    public float minDamage;
 
-    public int maxDamage;
+    public float maxDamage;
+
+    public int weight;
+
+    public float damage;
+    Random generator = new();
+
+    public virtual float AttackDamage(Weapon currentWeapon)
+    {
+        return damage = generator.Next((int)currentWeapon.minDamage, (int)currentWeapon.maxDamage);
+    } 
 }

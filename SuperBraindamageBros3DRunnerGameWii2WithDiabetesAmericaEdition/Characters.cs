@@ -11,9 +11,6 @@ public class Characters
     public int critChance;
     public float critMultiplier;
     public int dodge;
-    public Characters enemyCharacter = new();
-    public void Attack()
-    {
 
-    }
+    Random generator = new();
 }
