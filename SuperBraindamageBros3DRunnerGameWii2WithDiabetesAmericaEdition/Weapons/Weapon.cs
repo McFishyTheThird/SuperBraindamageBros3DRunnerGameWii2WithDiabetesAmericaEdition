@@ -8,7 +8,7 @@ public class Weapon
 
     public int weight;
 
-    public float damage;
+    public int damage;
     Random generator = new();
 
     public virtual float AttackDamage(Weapon currentWeapon)
