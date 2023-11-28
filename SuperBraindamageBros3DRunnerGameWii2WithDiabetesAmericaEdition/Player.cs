@@ -7,6 +7,8 @@ public class Player : Characters
     //how many percent damage weapons do
     public float damage;
     public Ability ability = new();
+    //affects how much heavyness on weapons affect speed
+    public int strength;
 
     public void Attack(List<Enemy> enemies, Random generator, Player playerCharacter,bool  isLevelChanging)
     {
@@ -33,6 +35,7 @@ public class Player : Characters
             {
                 if(attackChoice == i+1)
                 {
+                    currentWeapon.AttackDamage(currentWeapon);
                     int willDodge = generator.Next(0, 100);
                     if(willDodge <= enemies[i].dodge)
                     {
@@ -51,7 +54,7 @@ public class Player : Characters
                             playerCharacter.damage = 1;
                         }
 
-                        enemies[i].health -= currentWeapon.damage;
+                        enemies[i].health -= (int)playerCharacter.damage;
                         playerCharacter.damage = currentWeapon.damage;
                         Console.WriteLine($"You managed to hit the {enemies[i].name}");
                     }

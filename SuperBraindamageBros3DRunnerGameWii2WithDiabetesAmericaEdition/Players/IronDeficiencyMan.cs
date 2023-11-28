@@ -2,6 +2,7 @@
 
 public class IronDeficiencyMan : Player
 {
+    public Iron_Man_Actionfigure starterWeapon = new();
     public IronDeficiencyMan()
     {
         name = "Iron Deficency-Man";
@@ -14,6 +15,7 @@ public class IronDeficiencyMan : Player
         critMultiplier = 5;
         dodge = 0;
         damage = .5f;
+        currentWeapon = starterWeapon;
         Ability ability = new();
     }
 }

@@ -1,30 +1,40 @@
-﻿namespace SuperBraindamageBros3DRunnerGameWii2WithDiabetesAmericaEdition;
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace SuperBraindamageBros3DRunnerGameWii2WithDiabetesAmericaEdition;
 
 public class SuperBrainDamageBros
 {
     public int enemyNumber;
+    public Shop shop = new();
     public string enemyRoundChoice;
     Player playerCharacter = new();
     public int enemyAmount;
     public int levelNumber = 1;
     public string levelType = "normal";
     public bool isLevelChanging = true;
+    public List<Player> players = new(); 
     public List<Enemy> enemies = new(); 
     public List<Enemy> currentPossibleEnemies = new(); 
-    public void Game(Random generator)
+    public int finalLevelNumber = 20; 
+    Random generator = new();
+    public void Game()
     {
+        ChoosePlayer();
         while(playerCharacter.health > 1)
         {
-            if(isLevelChanging == true)
+            Console.Clear();
+            if(isLevelChanging == true && levelNumber <= finalLevelNumber)
             {
+                PossibleEnemies();
                 if(levelNumber%2 == 0)
                 {
                     enemyAmount = generator.Next(1,5);
-                    levelType = "Normal";
+                    levelType = "Special";
                 }
                 else
                 {
-                    levelType = "Special";
+                    enemyAmount = generator.Next(1,5);
+                    levelType = "Normal";
                 }
                 for(int i = 0; i < enemyAmount; i++)
                 {
@@ -34,72 +44,43 @@ public class SuperBrainDamageBros
                 }
                 isLevelChanging = false;
             }
-            if(levelNumber <= 13)
+            if(levelNumber <= finalLevelNumber && levelType == "Normal")
             {
                 Console.WriteLine($"{playerCharacter.name}s Stats:");
                 Console.WriteLine($"{playerCharacter.name}s Health:{playerCharacter.health}");
                 Console.WriteLine($"{playerCharacter.name}s Damage:{playerCharacter.damage}");
                 Console.WriteLine($"{playerCharacter.name}s Crit Chance:{playerCharacter.critChance}");
-                Console.WriteLine($"{playerCharacter.name}s Dodge Chance:{playerCharacter.dodgeChance}");
-                Console.WriteLine($"{playerCharacter.name}s Armor:{playerCharacter.armor}");
+                Console.WriteLine($"{playerCharacter.name}s Crit Multiplier:{playerCharacter.critMultiplier}");
+                Console.WriteLine($"{playerCharacter.name}s Dodge Chance:{playerCharacter.dodge}");
+                Console.WriteLine($"{playerCharacter.name}s Weapon:{playerCharacter.currentWeapon.name}");
                 Console.WriteLine("Hey there, Captain Indecisive! The clock's ticking, and so is my patience. Your move, or should I flip a coin for you?");
-                Console.WriteLine("A:Attack B:Heal C:Look at enemy stats");
+                Console.WriteLine("A:Attack");
                 string playerChoice = Console.ReadLine().ToLower();
                 Console.Clear();
                 if(playerChoice == "a" || playerChoice == "attack")
                 {
-                    playerCharacter.Attack(enemyCars, generator, playerCharacter, isLevelChanging);
-                    if(enemyCars.Count == 0)
+                    playerCharacter.Attack(enemies, generator, playerCharacter, isLevelChanging);
+                    if(enemies.Count == 0)
                     {
-                        // levelType = "shop";
                         levelNumber++;
                         isLevelChanging = true;
-                        playerCharacter.maxHealth += 10;
-                        playerCharacter.health = playerCharacter.maxHealth;
-                        playerCharacter.maxDamage += 10;
-                        playerCharacter.damage = playerCharacter.maxDamage;
-                        playerCharacter.armor += 1;
-                        playerCharacter.critChance += .5f;
-                        playerCharacter.normalDodgeChance += 1;
-                        playerCharacter.dodgeChance = playerCharacter.normalDodgeChance;
-                        if(levelNumber <= 13)
-                        {
-                            Console.WriteLine("FUCK!!! You defeated the cars. guess its time for a bigger challenge");
-                        }
+                        Console.WriteLine($"Level: {levelNumber}");
                     }
                     else
                     {
-                        for(int i = 0; i < enemyCars.Count; i++)
+                        for(int i = 0; i < enemies.Count; i++)
                         {
                             enemyNumber = i;
-                            enemyCars[i].Attack(generator, playerCharacter, enemyCars, enemyNumber);
+                            enemies[i].Attack(enemies, generator, playerCharacter, enemyNumber);
                         }
                     }
                     Console.ReadLine();
-                    Console.Clear();
                 }
-                else if(playerChoice == "b")
-                {
-                    Console.WriteLine("Since you are a massive coward who is afraid to die you choose to heal a bit");
-                    playerCharacter.Heal(playerCharacter, enemyNumber, enemyCars, generator);
-                    Console.ReadLine();
-                    Console.Clear();
-                }
-                else if(playerChoice == "c")
-                {
-                    for(int i = 0; i < enemyCars.Count; i++)
-                    {
-                        Console.WriteLine($"{enemyCars[i].name} Stats:");
-                        Console.WriteLine($"{enemyCars[i].name} Health:{enemyCars[i].health}");
-                        Console.WriteLine($"{enemyCars[i].name} Damage:{enemyCars[i].damage}");
-                        Console.WriteLine($"{enemyCars[i].name} Crit Chance:{enemyCars[i].critChance}");
-                        Console.WriteLine($"{enemyCars[i].name} Dodge Chance:{enemyCars[i].dodgeChance}");
-                        Console.WriteLine($"{enemyCars[i].name} Armor:{enemyCars[i].armor}");
-                        Console.WriteLine("");
-                    }
-                    Console.ReadLine();
-                    Console.Clear();
-                }
+            }
+            else if(levelNumber <= finalLevelNumber && levelType == "Special")
+            {
+                shop.Shopping(generator, playerCharacter);
+                isLevelChanging = true;
             }
             else
             {
@@ -114,4 +95,60 @@ public class SuperBrainDamageBros
         Console.ReadLine();
     }
     
+    public void ChoosePlayer()
+    {
+        bool hasChosen = false;
+        Asthma_Boy asthmaBoy = new();
+        Average_Man averageMan = new();
+        Cancer_Crusader cancerCrusader = new();
+        IronDeficiencyMan ironDeficiencyMan = new();
+        players.AddRange(new List<Player> {asthmaBoy, averageMan, cancerCrusader, ironDeficiencyMan});
+        while(hasChosen == false)
+        {
+            for(int i = 0; i < players.Count; i++)
+            {
+                Console.WriteLine($"{i+1}. {players[i].name}");
+            }
+            Console.WriteLine("write the number of the character you want to play as");
+            int playerChoice;
+            while (!int.TryParse(Console.ReadLine(), out playerChoice))
+            {       
+                Console.Write("You didn't provide a number you stupid dumb fuck, please try again:");
+            }
+            playerCharacter = players[playerChoice-1];
+            Console.WriteLine($"You are {playerCharacter.name}");
+            Console.WriteLine($"{playerCharacter.name}s Stats:");
+            Console.WriteLine($"{playerCharacter.name}s Health:{playerCharacter.health}");
+            Console.WriteLine($"{playerCharacter.name}s Damage:{playerCharacter.damage}");
+            Console.WriteLine($"{playerCharacter.name}s Crit Chance:{playerCharacter.critChance}");
+            Console.WriteLine($"{playerCharacter.name}s Crit Multiplier:{playerCharacter.critMultiplier}");
+            Console.WriteLine($"{playerCharacter.name}s Dodge Chance:{playerCharacter.dodge}");
+            Console.WriteLine($"{playerCharacter.name}s Starter Weapon:{playerCharacter.currentWeapon.name}");
+            Console.WriteLine("");
+            Console.WriteLine("Do you want to choose another character(yes/no)");
+            Console.WriteLine("Writing something else than the options will result as a no");
+            string chooseAnotherCharacter = Console.ReadLine().ToLower();
+            if(chooseAnotherCharacter == "yes")
+            {
+                hasChosen = false;
+                Console.Clear();
+            }
+            else
+            {
+                hasChosen = true;
+                Console.Clear();
+            }
+        }
+    }
+    public void PossibleEnemies()
+    {
+        Meatball_Fish meatballFish = new();
+        Pneumonoultramicroscopicsilicovolcanoconiosis_Destroyer pneumonoultramicroscopicsilicovolcanoconiosisDestroyer = new();
+        The_Emmy_Awards theEmmyAwards = new();
+        if(levelNumber == 1)
+        {
+            currentPossibleEnemies.AddRange(new List<Enemy> {meatballFish, pneumonoultramicroscopicsilicovolcanoconiosisDestroyer, theEmmyAwards});
+        }
+
+    }
 }

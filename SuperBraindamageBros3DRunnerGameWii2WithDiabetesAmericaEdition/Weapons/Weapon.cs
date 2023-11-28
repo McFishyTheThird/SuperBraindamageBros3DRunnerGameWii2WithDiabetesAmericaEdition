@@ -1,6 +1,6 @@
 ﻿namespace SuperBraindamageBros3DRunnerGameWii2WithDiabetesAmericaEdition;
 
-public class Weapon
+public class Weapon : Item
 {
     public float minDamage;
 

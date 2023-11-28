@@ -2,6 +2,7 @@
 
 public class Average_Man : Player
 {
+    public Fist starterWeapon = new();
     public Average_Man()
     {
         name = "Average-Man";
@@ -14,6 +15,7 @@ public class Average_Man : Player
         critMultiplier = 1.5f;
         dodge = 10;
         damage = 1f;
+        currentWeapon = starterWeapon;
         Ability ability = new();
     }
 }

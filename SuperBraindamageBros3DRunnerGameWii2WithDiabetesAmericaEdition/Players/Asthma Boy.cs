@@ -2,6 +2,7 @@ namespace SuperBraindamageBros3DRunnerGameWii2WithDiabetesAmericaEdition;
 
 public class Asthma_Boy : Player
 {
+    public Nebulizer starterWeapon = new();
     public Asthma_Boy()
     {
         name = "Asthma-Boy";
@@ -14,6 +15,7 @@ public class Asthma_Boy : Player
         critMultiplier = 2;
         dodge = 10;
         damage = 1f;
+        currentWeapon = starterWeapon;
         Ability ability = new();
     }
 }

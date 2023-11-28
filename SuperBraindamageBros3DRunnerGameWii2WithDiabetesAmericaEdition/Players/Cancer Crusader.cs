@@ -2,6 +2,7 @@
 
 public class Cancer_Crusader : Player
 {
+    public Stage_4 starterWeapon = new();
     public Cancer_Crusader()
     {
         name = "Cancer Crusader";
@@ -14,6 +15,7 @@ public class Cancer_Crusader : Player
         critMultiplier = 5;
         dodge = 0;
         damage = 1.5f;
+        currentWeapon = starterWeapon;
         Ability ability = new();
     }
 }
