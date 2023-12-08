@@ -6,15 +6,15 @@ public class Asthma_Boy : Player
     public Asthma_Boy()
     {
         name = "Asthma-Boy";
-        maxHealth = 75;
-        health = 75;
+        maxHealth = 125;
+        health = maxHealth;
         //affects how much heavyness on weapons affect speed
         strength = 10;
         speed = 5;
         critChance = 25;
         critMultiplier = 2;
         dodge = 10;
-        damage = 1f;
+        damageMultiplier = 1f;
         currentWeapon = starterWeapon;
         Ability ability = new();
     }

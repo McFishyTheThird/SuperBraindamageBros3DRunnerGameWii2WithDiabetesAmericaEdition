@@ -10,5 +10,7 @@ public class Nebulizer : Weapon
         maxDamage = 20;
 
         weight = 0;
+
+        attackAmount = 1;
     }
 }

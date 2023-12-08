@@ -10,5 +10,7 @@ public class Iron_Man_Actionfigure : Weapon
         maxDamage = 5;
 
         weight = 0;
+
+        attackAmount = 1;
     }
 }

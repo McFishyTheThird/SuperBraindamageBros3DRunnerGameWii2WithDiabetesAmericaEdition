@@ -2,6 +2,7 @@
 
 public class Fist : Weapon
 {
+    
     public Fist()
     {
         name = "Fists";
@@ -10,5 +11,7 @@ public class Fist : Weapon
         maxDamage = 10;
 
         weight = 0;
+        
+        attackAmount = 2;
     }
 }

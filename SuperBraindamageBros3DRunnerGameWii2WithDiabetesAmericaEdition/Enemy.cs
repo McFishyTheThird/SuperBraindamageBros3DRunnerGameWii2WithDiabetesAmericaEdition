@@ -5,7 +5,7 @@ public class Enemy : Characters
     public int minDamage;
     public int maxDamage;
     public int damage;
-    public void Attack(List<Enemy> enemies, Random generator, Player playerCharacter, int enemyNumber)
+    public override void Attack(List<Enemy> enemies, Random generator, Player playerCharacter, int enemyNumber, bool isLevelChanging)
     {
         int willDodge = generator.Next(0, 100);
         if(willDodge <= playerCharacter.dodge)
@@ -21,9 +21,9 @@ public class Enemy : Characters
                 damage = damage*(int)enemies[enemyNumber].critMultiplier;
                 Console.WriteLine("You score a crit");
             }
-            if(playerCharacter.damage < 1)
+            if(playerCharacter.damageMultiplier < 1)
             {
-                playerCharacter.damage = 1;
+                playerCharacter.damageMultiplier = 1;
             }
 
             playerCharacter.health -= enemies[enemyNumber].damage;

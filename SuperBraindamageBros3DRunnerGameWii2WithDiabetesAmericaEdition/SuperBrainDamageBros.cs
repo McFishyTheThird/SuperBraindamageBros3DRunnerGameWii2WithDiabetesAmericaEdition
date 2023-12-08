@@ -28,12 +28,11 @@ public class SuperBrainDamageBros
                 PossibleEnemies();
                 if(levelNumber%2 == 0)
                 {
-                    enemyAmount = generator.Next(1,5);
                     levelType = "Special";
                 }
                 else
                 {
-                    enemyAmount = generator.Next(1,5);
+                    enemyAmount = generator.Next(1,3);
                     levelType = "Normal";
                 }
                 for(int i = 0; i < enemyAmount; i++)
@@ -48,18 +47,18 @@ public class SuperBrainDamageBros
             {
                 Console.WriteLine($"{playerCharacter.name}s Stats:");
                 Console.WriteLine($"{playerCharacter.name}s Health:{playerCharacter.health}");
-                Console.WriteLine($"{playerCharacter.name}s Damage:{playerCharacter.damage}");
                 Console.WriteLine($"{playerCharacter.name}s Crit Chance:{playerCharacter.critChance}");
                 Console.WriteLine($"{playerCharacter.name}s Crit Multiplier:{playerCharacter.critMultiplier}");
                 Console.WriteLine($"{playerCharacter.name}s Dodge Chance:{playerCharacter.dodge}");
                 Console.WriteLine($"{playerCharacter.name}s Weapon:{playerCharacter.currentWeapon.name}");
+                Console.WriteLine($"{playerCharacter.name}s Weapon Damage:{playerCharacter.currentWeapon.minDamage}-{playerCharacter.currentWeapon.maxDamage}");
                 Console.WriteLine("Hey there, Captain Indecisive! The clock's ticking, and so is my patience. Your move, or should I flip a coin for you?");
                 Console.WriteLine("A:Attack");
                 string playerChoice = Console.ReadLine().ToLower();
                 Console.Clear();
                 if(playerChoice == "a" || playerChoice == "attack")
                 {
-                    playerCharacter.Attack(enemies, generator, playerCharacter, isLevelChanging);
+                    playerCharacter.Attack(enemies, generator, playerCharacter, enemyNumber, isLevelChanging);
                     if(enemies.Count == 0)
                     {
                         levelNumber++;
@@ -71,7 +70,7 @@ public class SuperBrainDamageBros
                         for(int i = 0; i < enemies.Count; i++)
                         {
                             enemyNumber = i;
-                            enemies[i].Attack(enemies, generator, playerCharacter, enemyNumber);
+                            enemies[i].Attack(enemies, generator, playerCharacter, enemyNumber, isLevelChanging);
                         }
                     }
                     Console.ReadLine();
@@ -79,10 +78,12 @@ public class SuperBrainDamageBros
             }
             else if(levelNumber <= finalLevelNumber && levelType == "Special")
             {
+                Console.WriteLine($"Level {levelNumber}: Shop");
                 shop.Shopping(generator, playerCharacter);
                 isLevelChanging = true;
+                levelNumber++;
             }
-            else
+            else if(playerCharacter.health == 0)
             {
                 Console.WriteLine("Goddammit...i guess you win.");
                 Console.ReadLine();
@@ -119,11 +120,11 @@ public class SuperBrainDamageBros
             Console.WriteLine($"You are {playerCharacter.name}");
             Console.WriteLine($"{playerCharacter.name}s Stats:");
             Console.WriteLine($"{playerCharacter.name}s Health:{playerCharacter.health}");
-            Console.WriteLine($"{playerCharacter.name}s Damage:{playerCharacter.damage}");
             Console.WriteLine($"{playerCharacter.name}s Crit Chance:{playerCharacter.critChance}");
             Console.WriteLine($"{playerCharacter.name}s Crit Multiplier:{playerCharacter.critMultiplier}");
             Console.WriteLine($"{playerCharacter.name}s Dodge Chance:{playerCharacter.dodge}");
             Console.WriteLine($"{playerCharacter.name}s Starter Weapon:{playerCharacter.currentWeapon.name}");
+            Console.WriteLine($"{playerCharacter.name}s Starter Weapon Damage:{playerCharacter.currentWeapon.minDamage}-{playerCharacter.currentWeapon.maxDamage}");
             Console.WriteLine("");
             Console.WriteLine("Do you want to choose another character(yes/no)");
             Console.WriteLine("Writing something else than the options will result as a no");
