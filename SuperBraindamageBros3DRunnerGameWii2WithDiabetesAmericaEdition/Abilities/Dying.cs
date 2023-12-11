@@ -1,27 +1,25 @@
 ﻿namespace SuperBraindamageBros3DRunnerGameWii2WithDiabetesAmericaEdition;
 
-public class Cancer_Growth : TemporaryDamageBuff
+public class Dying : TemporaryDamageBuff
 {
-    public Cancer_Growth()
+    public Dying()
     {
         roundAmount = 0;
         roundAmountMax = 0;
         coolDown = 0;
-        coolDownMax = 0;
-        name = "Cancer Growth";
+        coolDownMax = 2;
+        name = "Dying";
         automatic = true;
     }
 
     public override void UsingAbility(Weapon currentWeapon, Player playerCharacter)
     {
-        currentWeapon.minDamage++;
-        currentWeapon.maxDamage++;
+        playerCharacter.critChance += 25;
+        playerCharacter.health -= 5;
     }
 
     public override void AbilityEnd(Weapon currentWeapon, Player playerCharacter)
     {
-        currentWeapon.minDamage -= 1;
-        currentWeapon.maxDamage -= 1;
-        coolDown = coolDownMax;
+        playerCharacter.critChance -= 25;
     }
 }

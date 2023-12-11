@@ -53,7 +53,7 @@ public class SuperBrainDamageBros
                 Console.WriteLine($"{playerCharacter.name}s Weapon:{playerCharacter.currentWeapon.name}");
                 Console.WriteLine($"{playerCharacter.name}s Weapon Damage:{playerCharacter.currentWeapon.minDamage}-{playerCharacter.currentWeapon.maxDamage}");
                 Console.WriteLine("Hey there, Captain Indecisive! The clock's ticking, and so is my patience. Your move, or should I flip a coin for you?");
-                Console.WriteLine("A:Attack");
+                Console.WriteLine("A:Attack B: Heal");
                 string playerChoice = Console.ReadLine().ToLower();
                 Console.Clear();
                 if(playerChoice == "a" || playerChoice == "attack")
@@ -74,6 +74,27 @@ public class SuperBrainDamageBros
                         }
                     }
                     Console.ReadLine();
+                }
+                if(playerChoice == "b" || playerChoice == "heal")
+                {
+                    for(int i = 0; i < enemies.Count; i++)
+                    {
+                        enemyNumber = i;
+                        enemies[i].Attack(enemies, generator, playerCharacter, enemyNumber, isLevelChanging);
+                        playerCharacter.Heal(playerCharacter);
+                    }
+                    Console.ReadLine();
+                }
+                if(playerCharacter.health > playerCharacter.maxHealth)
+                {
+                    if(playerCharacter.health-((playerCharacter.health-playerCharacter.maxHealth)/2) > playerCharacter.maxHealth)
+                    {
+                        playerCharacter.health -= (playerCharacter.health-playerCharacter.maxHealth)/2;
+                    }
+                    else if(playerCharacter.health-((playerCharacter.health-playerCharacter.maxHealth)/2) < playerCharacter.maxHealth)
+                    {
+                        playerCharacter.health = playerCharacter.maxHealth;
+                    }
                 }
             }
             else if(levelNumber <= finalLevelNumber && levelType == "Special")

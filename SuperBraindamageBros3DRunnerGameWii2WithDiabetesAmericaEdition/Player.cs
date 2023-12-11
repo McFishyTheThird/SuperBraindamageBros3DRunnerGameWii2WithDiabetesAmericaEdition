@@ -73,32 +73,32 @@ public class Player : Characters
                             enemies.Remove(enemies[i]);
                             currentWeapon.attackAmount = 0;
                         }
-                        if(ability.coolDown > 0)
+                        if(currentWeapon.ability.coolDown > 0)
                         {
                             ability.coolDown--;
                         }
-                        if(ability.coolDown == 0)
+                        else if(currentWeapon.ability.coolDown == 0)
                         {
-                            if(ability.automatic == false)
+                            if(currentWeapon.ability.automatic == false)
                             {
                                 Console.WriteLine($"do you want to use your weapons ability {currentWeapon.ability.name}(y/n)");
                                 string abilityUsage = Console.ReadLine().ToLower();
                                 if(abilityUsage == "y" || abilityUsage == "yes")
                                 {
-                                    currentWeapon.ability.UsingAbility(currentWeapon);
+                                    currentWeapon.ability.UsingAbility(currentWeapon, playerCharacter);
                                 }
                                 else
                                 {
 
                                 }
                             }
-                            else if(ability.automatic == true)
+                            else if(currentWeapon.ability.automatic == true)
                             {
-                                currentWeapon.ability.UsingAbility(currentWeapon); 
+                                currentWeapon.ability.UsingAbility(currentWeapon, playerCharacter); 
                             }
                         }
                     }
-                    if(ability is TemporaryDamageBuff)
+                    if(currentWeapon.ability is TemporaryDamageBuff)
                     {
                         TemporaryDamageBuff buff = (TemporaryDamageBuff) ability;
                         if(buff.roundAmount > 0)
@@ -107,12 +107,16 @@ public class Player : Characters
                         }
                         if(buff.roundAmount == 0)
                         {
-                            currentWeapon.ability.AbilityEnd(currentWeapon);
+                            currentWeapon.ability.AbilityEnd(currentWeapon, playerCharacter);
                         }
                     }
                     Console.WriteLine("");
                 }
             }
         }
+    }
+    public void Heal(Player playerCharacter)
+    {
+        playerCharacter.health += 10;
     }
 }

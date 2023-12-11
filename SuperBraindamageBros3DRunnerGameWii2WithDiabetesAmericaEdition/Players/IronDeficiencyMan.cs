@@ -7,7 +7,7 @@ public class IronDeficiencyMan : Player
     {
         name = "Iron Deficency-Man";
         maxHealth = 100;
-        health = maxHealth;
+        health = 150;
         //affects how much heavyness on weapons affect speed
         strength = 5;
         speed = 10;
